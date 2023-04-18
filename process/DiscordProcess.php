@@ -13,7 +13,7 @@ class DiscordProcess
     public function onWorkerStart()
     {
         $discord = new Discord([
-            'token' => '',
+            'token' => config('env.discord.token'),
             'intents' => Intents::getDefaultIntents(),
         ]);
         
