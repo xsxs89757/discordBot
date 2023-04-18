@@ -13,9 +13,8 @@ class DiscordProcess
     public function onWorkerStart()
     {
         $discord = new Discord([
-            'token' => 'MTA5Nzc4NDQ5NTczMTY1NDY1Ng.G46-Lx.j1V8RHTjhPb0ACnlWbYLtOOyHh4AF6VOxSLsVA',
+            'token' => '',
             'intents' => Intents::getDefaultIntents(),
-            'dnsConfig' => '127.0.0.1'
             // 'http' => [
             //     'proxy' => [
             //         'address' => self::PROXY,
