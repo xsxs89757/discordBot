@@ -15,16 +15,6 @@ class DiscordProcess
         $discord = new Discord([
             'token' => '',
             'intents' => Intents::getDefaultIntents(),
-            // 'http' => [
-            //     'proxy' => [
-            //         'address' => self::PROXY,
-            //     ],
-            // ],
-            // 'ws' => [
-            //     'proxy' => [
-            //         'address' => self::PROXY,
-            //     ],
-            // ],
         ]);
         
         $discord->on('ready', function (Discord $discord) {
