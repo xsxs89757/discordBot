@@ -22,20 +22,20 @@ class DiscordProcess
         
             // Listen for messages.
             $discord->on(Event::MESSAGE_CREATE, function (Message $message, Discord $discord) {
-                $data = [
-                    'msessage_id' => $message->id,
-                    'timestamp' => $message->timestamp,
-                    'channel_id' => $message->channel_id,
-                    'guild_id' => $message->guild_id,
-                    'attachments' => get_object_vars($message->attachments),
-                    'components' => get_object_vars($message->components),
-                ];
-                var_dump($data);
+                // $data = [
+                //     'message' => $message->getRepositoryAttributes(),
+                //     'timestamp' => $message->timestamp->toArray(),
+                //     'channel_id' => $message->channel_id,
+                //     'guild_id' => $message->guild_id,
+                //     'attachments' => $message->attachments->toArray(),
+                //     'components' => $message->components->toArray(),
+                // ];
+                // var_dump($data);
                 echo "{$message->author->username}: {$message->content}", PHP_EOL;
                 // Note: MESSAGE_CONTENT intent must be enabled to get the content if the bot is not mentioned/DMed.
             });
             $discord->on(Event::MESSAGE_UPDATE, function (Message $message, Discord $discord) {
-                // var_dump($message);
+                var_dump($message);
                 echo "{$message->author->username}: {$message->content}", PHP_EOL;
                 // Note: MESSAGE_CONTENT intent must be enabled to get the content if the bot is not mentioned/DMed.
             });
