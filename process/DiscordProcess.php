@@ -8,8 +8,6 @@ use Discord\WebSockets\Event;
 
 class DiscordProcess
 {
-    const PROXY = 'http://127.0.0.1:7890';
-
     public function onWorkerStart()
     {
         $discord = new Discord([
@@ -45,7 +43,6 @@ class DiscordProcess
                         $row_components = [];
                         // 遍历行内的每个组件
                         foreach ($row->components as $component) {
-                            var_dump($component);
                             // 提取组件的相关信息
                             $row_components[] = [
                                 'type' => $component->type,
