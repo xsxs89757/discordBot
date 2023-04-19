@@ -13,6 +13,7 @@ class Sender
     private string $version;
     private string $id;
     private string $flags;
+    private string $nonce;
 
     private static ?Sender $instance = null;
 
@@ -24,7 +25,8 @@ class Sender
         string $session_id,
         string $version,
         string $id,
-        string $flags
+        string $nonce,
+        string $flags = '--v 5'
     ) {
         $this->channelid = $channelid;
         $this->authorization = $authorization;
@@ -33,6 +35,7 @@ class Sender
         $this->session_id = $session_id;
         $this->version = $version;
         $this->id = $id;
+        $this->nonce = $nonce;
         $this->flags = $flags;
     }
 
@@ -44,10 +47,11 @@ class Sender
         string $session_id,
         string $version,
         string $id,
+        string $nonce,
         string $flags
     ): Sender {
         if (self::$instance === null) {
-            self::$instance = new Sender($channelid, $authorization, $application_id, $guild_id, $session_id, $version, $id, $flags);
+            self::$instance = new Sender($channelid, $authorization, $application_id, $guild_id, $session_id, $version, $id, $nonce, $flags);
         }
 
         return self::$instance;
@@ -78,6 +82,7 @@ class Sender
                 'options' => [['type' => 3, 'name' => 'prompt', 'value' => $prompt . ' ' . $this->flags]],
                 'attachments' => [],
             ],
+            'nonce' => $this->nonce,
         ];
 
         $client = new Client([
