@@ -43,7 +43,7 @@ class DiscordProcess
                     // 遍历所有组件行
                     foreach ($message->components as $row) {
                         $row_components = [];
-        
+                        var_dump($row);
                         // 遍历行内的每个组件
                         foreach ($row as $component) {
                             var_dump($component);
