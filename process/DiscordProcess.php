@@ -46,19 +46,20 @@ class DiscordProcess
         
                         // 遍历行内的每个组件
                         foreach ($row as $component) {
+                            var_dump($component);
                             // 提取组件的相关信息
-                            $row_components[] = [
-                                'type' => $component->type,
-                                'style' => $component->style ?? null,
-                                'label' => $component->label ?? null,
-                                'emoji' => $component->emoji ?? null,
-                                'custom_id' => $component->custom_id ?? null,
-                                'url' => $component->url ?? null,
-                                'disabled' => $component->disabled ?? null,
-                            ];
+                            // $row_components[] = [
+                            //     'type' => $component->type,
+                            //     'style' => $component->style ?? null,
+                            //     'label' => $component->label ?? null,
+                            //     'emoji' => $component->emoji ?? null,
+                            //     'custom_id' => $component->custom_id ?? null,
+                            //     'url' => $component->url ?? null,
+                            //     'disabled' => $component->disabled ?? null,
+                            // ];
                         }
         
-                        $components_array[] = $row_components;
+                        // $components_array[] = $row_components;
                     }
                 }
                 $data = [
@@ -68,7 +69,6 @@ class DiscordProcess
                     'components' => $components_array,
                 ];
                 var_dump($data);
-                var_dump($message);
                 echo "{$message->author->username}: {$message->content}", PHP_EOL;
                 // Note: MESSAGE_CONTENT intent must be enabled to get the content if the bot is not mentioned/DMed.
             });
