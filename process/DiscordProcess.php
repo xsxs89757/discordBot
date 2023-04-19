@@ -43,23 +43,22 @@ class DiscordProcess
                     // 遍历所有组件行
                     foreach ($message->components as $row) {
                         $row_components = [];
-                        var_dump($row);
                         // 遍历行内的每个组件
-                        foreach ($row as $component) {
+                        foreach ($row->components as $component) {
                             var_dump($component);
                             // 提取组件的相关信息
-                            // $row_components[] = [
-                            //     'type' => $component->type,
-                            //     'style' => $component->style ?? null,
-                            //     'label' => $component->label ?? null,
-                            //     'emoji' => $component->emoji ?? null,
-                            //     'custom_id' => $component->custom_id ?? null,
-                            //     'url' => $component->url ?? null,
-                            //     'disabled' => $component->disabled ?? null,
-                            // ];
+                            $row_components[] = [
+                                'type' => $component->type,
+                                'style' => $component->style ?? null,
+                                'label' => $component->label ?? null,
+                                'emoji' => $component->emoji ?? null,
+                                'custom_id' => $component->custom_id ?? null,
+                                'url' => $component->url ?? null,
+                                'disabled' => $component->disabled ?? null,
+                            ];
                         }
         
-                        // $components_array[] = $row_components;
+                        $components_array[] = $row_components;
                     }
                 }
                 $data = [
