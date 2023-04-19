@@ -22,10 +22,12 @@ class DiscordProcess
         
             // Listen for messages.
             $discord->on(Event::MESSAGE_CREATE, function (Message $message, Discord $discord) {
+                var_dump($message);
                 echo "{$message->author->username}: {$message->content}", PHP_EOL;
                 // Note: MESSAGE_CONTENT intent must be enabled to get the content if the bot is not mentioned/DMed.
             });
             $discord->on(Event::MESSAGE_UPDATE, function (Message $message, Discord $discord) {
+                var_dump($message);
                 echo "{$message->author->username}: {$message->content}", PHP_EOL;
                 // Note: MESSAGE_CONTENT intent must be enabled to get the content if the bot is not mentioned/DMed.
             });
