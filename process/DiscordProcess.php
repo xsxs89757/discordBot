@@ -51,7 +51,7 @@ class DiscordProcess
                                 'type' => $component->type,
                                 'style' => $component->style ?? null,
                                 'label' => $component->label ?? null,
-                                'emoji' => $component->emoji ?? null,
+                                'emoji' => $component->emoji ? ($component->emoji->name) : null,
                                 'custom_id' => $component->custom_id ?? null,
                                 'url' => $component->url ?? null,
                                 'disabled' => $component->disabled ?? null,
