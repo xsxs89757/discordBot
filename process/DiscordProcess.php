@@ -25,6 +25,11 @@ class DiscordProcess
                 echo "{$message->author->username}: {$message->content}", PHP_EOL;
                 // Note: MESSAGE_CONTENT intent must be enabled to get the content if the bot is not mentioned/DMed.
             });
+            $discord->on(Event::MESSAGE_UPDATE, function (Message $message, Discord $discord) {
+                echo "{$message->author->username}: {$message->content}", PHP_EOL;
+                // Note: MESSAGE_CONTENT intent must be enabled to get the content if the bot is not mentioned/DMed.
+            });
+
         });
         
         $discord->run();
