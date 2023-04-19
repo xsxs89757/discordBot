@@ -18,7 +18,7 @@ class DiscordProcess
         $session_id = "9f905ea42829a92b5d86fa581ddd8d33";
         $version = "1077969938624553050";
         $id = "938956540159881230";
-        $nonce = '22381723';
+        $nonce = '223817256';
         $flags = "--v 5";
         $prompt = "forest, big bad wolf, unreal engine, cinematic lighting, UHD, super detail --aspect 2:3";
         Sender::getInstance($channelid, $authorization, $application_id, $guild_id, $session_id, $version, $id, $nonce, $flags)->send($prompt);
