@@ -15,7 +15,7 @@ class DiscordProcess
         $authorization = "MTA2NzA4MjU3NjU1ODMwNTI4MA.GhUKOG.tyJa1_F__yxsDiqyXox8g_EubtIdYye40M8u3U";
         $application_id = "936929561302675456";
         $guild_id = "1092701344009293895";
-        $session_id = "245d98bdbbfe3b1a6744ca6e744b2199";
+        $session_id = "9f905ea42829a92b5d86fa581ddd8d33";
         $version = "1077969938624553050";
         $id = "938956540159881230";
         $nonce = '22381723';
