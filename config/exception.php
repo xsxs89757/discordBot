@@ -14,4 +14,6 @@
 
 return [
     '' => support\exception\Handler::class,
+    'admin' => \Onlyoung4u\AsApi\Kernel\Exception\Handler::class,
+    'AsApi' => \Onlyoung4u\AsApi\Kernel\Exception\Handler::class,
 ];

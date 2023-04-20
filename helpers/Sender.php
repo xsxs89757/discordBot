@@ -171,9 +171,15 @@ class Sender
             'headers' => $header,
             'proxy' => 'http://127.0.0.1:7890'
         ]);
-        
+        $attempt = 0;
+        $maxAttempts = 3;
         do {
             $response = $client->post('https://discord.com/api/v9/interactions', ['json' => $payload]);
+            $attempt++;
+
+            if ($attempt > $maxAttempts) {
+                throw new \Exception("Exceeded maximum attempts ($maxAttempts) to send payload.");
+            }
         } while ($response->getStatusCode() != 204);
 
         return $type === 'imagine' ? $prompt  . ' ' . $this->flags : '';
