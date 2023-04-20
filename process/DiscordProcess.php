@@ -65,7 +65,7 @@ class DiscordProcess
                     'attachments' => $attachments_array,
                     'components' => $components_array,
                 ];
-                Log::debug('MESSAGE_CREATE:', object_to_array($message));
+                Log::debug('MESSAGE_CREATE:', json_decode(json_encode($message),true));
                 var_dump($data);
                 // var_dump($message);
                 echo "{$message->author->username}: {$message->content}", PHP_EOL;
@@ -86,7 +86,7 @@ class DiscordProcess
                     }
                     
                 }
-                Log::debug('MESSAGE_UPDATE:', object_to_array($message));
+                Log::debug('MESSAGE_UPDATE:', json_decode(json_encode($message), true ));
                 echo "{$message->author->username}: {$message->content}", PHP_EOL;
                 // Note: MESSAGE_CONTENT intent must be enabled to get the content if the bot is not mentioned/DMed.
             });
