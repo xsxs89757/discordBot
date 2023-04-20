@@ -65,21 +65,22 @@ class DiscordProcess
                     'components' => $components_array,
                 ];
                 var_dump($data);
+                var_dump($message);
                 echo "{$message->author->username}: {$message->content}", PHP_EOL;
                 // Note: MESSAGE_CONTENT intent must be enabled to get the content if the bot is not mentioned/DMed.
             });
             $discord->on(Event::MESSAGE_UPDATE, function (Message $message, Discord $discord) {
                 if($message->author->username === 'Midjourney Bot'){
                     $content = $message->content;
+                    $percentageb = '';
                     preg_match('/\((\d{1,3}%)\)/', $content, $percentage);
-                    $percentage = $percentage[1]; //获取%比
+                    if($percentage)$percentageb = $percentage[1]; //获取%比
                     if($percentage){
                         $data = [
                             'message' => $message->getRepositoryAttributes(),
                             'nonce' => $message->nonce,
-                            'progress' => $percentage
+                            'progress' => $percentageb
                         ];
-                        var_dump($data);
                     }
                     
                 }
