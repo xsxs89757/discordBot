@@ -1,10 +1,11 @@
 <?php
 namespace process;
 
+use support\Log;
 use Discord\Discord;
-use Discord\Parts\Channel\Message;
-use Discord\WebSockets\Intents;
 use Discord\WebSockets\Event;
+use Discord\WebSockets\Intents;
+use Discord\Parts\Channel\Message;
 
 class DiscordProcess
 {
@@ -64,8 +65,9 @@ class DiscordProcess
                     'attachments' => $attachments_array,
                     'components' => $components_array,
                 ];
-                // var_dump($data);
-                var_dump($message);
+                Log::debug('MESSAGE_CREATE:', object_to_array($message));
+                var_dump($data);
+                // var_dump($message);
                 echo "{$message->author->username}: {$message->content}", PHP_EOL;
                 // Note: MESSAGE_CONTENT intent must be enabled to get the content if the bot is not mentioned/DMed.
             });
@@ -84,6 +86,7 @@ class DiscordProcess
                     }
                     
                 }
+                Log::debug('MESSAGE_UPDATE:', object_to_array($message));
                 echo "{$message->author->username}: {$message->content}", PHP_EOL;
                 // Note: MESSAGE_CONTENT intent must be enabled to get the content if the bot is not mentioned/DMed.
             });
