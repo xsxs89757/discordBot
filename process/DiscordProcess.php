@@ -18,7 +18,6 @@ class DiscordProcess
         
         $discord->on('ready', function (Discord $discord) {
             echo "Bot is ready!", PHP_EOL;
-        
             // Listen for messages.
             $discord->on(Event::MESSAGE_CREATE, function (Message $message, Discord $discord) {
                 $attachments_array = [];
@@ -61,12 +60,12 @@ class DiscordProcess
                 }
                 $data = [
                     'message' => $message->getRepositoryAttributes(),
-                    'nonce' => $message->nonce,
+                    'uuid' => pregGetUUID($message->content),
                     'attachments' => $attachments_array,
                     'components' => $components_array,
                 ];
-                Log::debug('MESSAGE_CREATE:', json_decode(json_encode($message),true));
-                var_dump($data);
+                
+                Log::debug('MESSAGE_CREATE:', json_decode(json_encode($message), true));
                 // var_dump($message);
                 echo "{$message->author->username}: {$message->content}", PHP_EOL;
                 // Note: MESSAGE_CONTENT intent must be enabled to get the content if the bot is not mentioned/DMed.
@@ -80,13 +79,13 @@ class DiscordProcess
                     if($percentage){
                         $data = [
                             'message' => $message->getRepositoryAttributes(),
-                            'nonce' => $message->nonce,
+                            'uuid' => pregGetUUID($message->content),
                             'progress' => $percentageb
                         ];
                     }
                     
                 }
-                Log::debug('MESSAGE_UPDATE:', json_decode(json_encode($message), true ));
+                Log::debug('MESSAGE_UPDATE:', json_decode(json_encode($message), true));
                 echo "{$message->author->username}: {$message->content}", PHP_EOL;
                 // Note: MESSAGE_CONTENT intent must be enabled to get the content if the bot is not mentioned/DMed.
             });
