@@ -21,13 +21,14 @@ class DiscordProcess
             'timeout' => 500, // 设置超时时间为 10 秒
         ]);
         $connector = new RatchetConnector($loop, $reactConnector);
-        $connector("wss://gateway.discord.gg/?encoding=json&v=9&compress=zlib-stream")
+        $connector("wss://gateway.discord.gg/?encoding=json&v=9")
             ->then(function(\Ratchet\Client\WebSocket $conn){
                 $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
                     if ($msg->isBinary()) {
                         try{
                             $compressedData = $msg->getPayload();
-
+                            var_dump($compressedData);
+                            var_dump(bin2hex($compressedData));
                             // 解压缩数据
                             $uncompressedData = zlib_decode(base64_decode($compressedData));
                 
