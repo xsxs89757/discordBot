@@ -27,31 +27,23 @@ class DiscordProcess
                     if ($msg->isBinary()) {
                         try{
                             $compressedData = $msg->getPayload();
-                            $tempFile = tempnam(sys_get_temp_dir(), 'zip');
-                            file_put_contents($tempFile, $compressedData);
-                            $zip = new \ZipArchive();
-                            $result = $zip->open($tempFile);
-                            if ($result === true) {
-                                $uncompressedData = '';
-                                for ($i = 0; $i < $zip->numFiles; $i++) {
-                                    $uncompressedData .= $zip->getFromIndex($i);
-                                }
-                                $zip->close();
-                                unlink($tempFile);
-                            
+
+                            // 解压缩数据
+                            $uncompressedData = zlib_decode(base64_decode($compressedData));
+                
+                            // 检查解压缩是否成功
+                            if ($uncompressedData === false) {
+                                echo "Failed to decompress data.\n";
+                            } else {
                                 // 解码 JSON 数据
                                 $jsonData = json_decode($uncompressedData, true);
-                            
+                
                                 if ($jsonData === null) {
                                     echo "Failed to decode JSON data.\n";
                                 } else {
                                     echo "Decoded JSON data: " . json_encode($jsonData, JSON_PRETTY_PRINT) . "\n";
                                 }
-                            } else {
-                                echo "Failed to open zip file.\n";
-                                unlink($tempFile);
                             }
-
                         }catch(\Throwable $e){
                             echo $e->getMessage();
                         }
