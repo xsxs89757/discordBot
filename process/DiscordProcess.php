@@ -10,6 +10,7 @@ use Discord\Parts\Channel\Message;
 use Ratchet\Client\Connector as RatchetConnector;
 use React\EventLoop\Loop;
 use React\Socket\Connector as ReactConnector;
+use Ratchet\MessageComponentInterface;
 
 class DiscordProcess
 {
@@ -23,7 +24,11 @@ class DiscordProcess
         $connector("wss://gateway.discord.gg/?encoding=json&v=9&compress=zlib-stream")
             ->then(function(\Ratchet\Client\WebSocket $conn){
                 $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
-                    echo "Received: {$msg}\n";  
+                    if ($msg->isBinary()) {
+                        echo "Binary message received: " . bin2hex($msg->getPayload()) . "\n";
+                    } else {
+                        echo "Text message received: {$msg}\n";
+                    }
                 });
 
                 $conn->on('close', function($code = null, $reason = null)  {
