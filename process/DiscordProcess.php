@@ -26,7 +26,9 @@ class DiscordProcess
                 $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
                     if ($msg->isBinary()) {
                         try{
-                            $compressedData = $msg->getPayload();
+                            $bin2hex = bin2hex($msg->getPayload());
+                            var_dump($bin2hex);
+                            $compressedData = hex2bin($bin2hex);
 
                             $uncompressedData = zlib_decode($compressedData);
 
