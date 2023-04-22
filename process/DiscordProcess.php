@@ -25,7 +25,7 @@ class DiscordProcess
             ->then(function(\Ratchet\Client\WebSocket $conn){
                 $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
                     if ($msg->isBinary()) {
-                        echo "Binary message received: " . bin2hex($msg->getPayload()) . "\n";
+                        echo "Binary message received: " . gzdecode($msg->getPayload()) . "\n";
                     } else {
                         echo "Text message received: {$msg}\n";
                     }
