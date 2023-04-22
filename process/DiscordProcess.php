@@ -25,7 +25,24 @@ class DiscordProcess
             ->then(function(\Ratchet\Client\WebSocket $conn){
                 $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
                     if ($msg->isBinary()) {
-                        echo "Binary message received: " . gzdecode($msg->getPayload()) . "\n";
+                        $compressedData = $msg->getPayload();
+
+                        // 解压缩数据
+                        $uncompressedData = gzdecode($compressedData);
+            
+                        // 检查解压缩是否成功
+                        if ($uncompressedData === false) {
+                            echo "Failed to decompress data.\n";
+                        } else {
+                            // 解码 JSON 数据
+                            $jsonData = json_decode($uncompressedData, true);
+            
+                            if ($jsonData === null) {
+                                echo "Failed to decode JSON data.\n";
+                            } else {
+                                echo "Decoded JSON data: " . json_encode($jsonData, JSON_PRETTY_PRINT) . "\n";
+                            }
+                        }
                     } else {
                         echo "Text message received: {$msg}\n";
                     }
