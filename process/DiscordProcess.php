@@ -7,10 +7,35 @@ use Discord\WebSockets\Event;
 use Discord\WebSockets\Intents;
 use Discord\Parts\Channel\Message;
 
+use Ratchet\Client\Connector as RatchetConnector;
+use React\EventLoop\Loop;
+use React\Socket\Connector as ReactConnector;
+
 class DiscordProcess
 {
     public function onWorkerStart()
     {
+        $loop = Loop::get();
+        $reactConnector = new ReactConnector($loop, [
+            'timeout' => 500, // 设置超时时间为 10 秒
+        ]);
+        $connector = new RatchetConnector($loop, $reactConnector);
+        $connector("wss://gateway.discord.gg/?encoding=json&v=9&compress=zlib-stream")
+            ->then(function(\Ratchet\Client\WebSocket $conn){
+                $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
+                    echo "Received: {$msg}\n";  
+                });
+
+                $conn->on('close', function($code = null, $reason = null)  {
+                    echo "Connection closed ({$code} - {$reason})\n";
+                });
+            }, function(\Exception $e) use ($loop) {
+                echo "Could not connect: {$e->getMessage()}\n";
+
+            });
+
+        $loop->run();
+
         $discord = new Discord([
             'token' => config('env.discord.token'),
             'intents' => Intents::getDefaultIntents(),
