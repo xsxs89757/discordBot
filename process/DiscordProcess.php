@@ -28,29 +28,16 @@ class DiscordProcess
                         try{
                             $compressedData = $msg->getPayload();
 
-                            // 将二进制数据保存到临时文件
-                            $tempFile = tempnam(sys_get_temp_dir(), 'zlib');
-                            file_put_contents($tempFile, $compressedData);
+                            $uncompressedData = zlib_decode($compressedData);
 
-                            // 打开使用 compress.zlib:// 流包装器的临时文件
-                            $handle = fopen('compress.zlib://' . $tempFile, 'rb');
-
-                            // 检查文件是否成功打开
-                            if (!$handle) {
-                                echo "Failed to open the file.\n";
+                            // 检查解压缩是否成功
+                            if ($uncompressedData === false) {
+                                echo "Failed to decompress data.\n";
                             } else {
-                                // 读取解压缩的数据
-                                $uncompressedData = stream_get_contents($handle);
-
-                                // 关闭文件句柄
-                                fclose($handle);
-
-                                // 删除临时文件
-                                unlink($tempFile);
-
-                                // 输出解压缩的数据
+                                // 输出解压缩后的数据
                                 echo "Uncompressed data: {$uncompressedData}\n";
                             }
+
                         }catch(\Throwable $e){
                             echo $e->getMessage();
                         }
