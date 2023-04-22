@@ -29,7 +29,7 @@ class DiscordProcess
                             $compressedData = $msg->getPayload();
 
                             // 解压缩数据
-                            $uncompressedData = zlib_decode($compressedData);
+                            $uncompressedData = gzuncompress($compressedData);
                 
                             // 检查解压缩是否成功
                             if ($uncompressedData === false) {
