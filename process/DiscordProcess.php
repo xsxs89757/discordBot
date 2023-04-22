@@ -23,37 +23,11 @@ class DiscordProcess
         $connector = new RatchetConnector($loop, $reactConnector);
         $connector("wss://gateway.discord.gg/?encoding=json&v=9")
             ->then(function(\Ratchet\Client\WebSocket $conn){
+                
                 $conn->on('message', function(\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($conn) {
-                    if ($msg->isBinary()) {
-                        try{
-                            $compressedData = $msg->getPayload();
-                            var_dump($compressedData);
-                            var_dump(bin2hex($compressedData));
-                            // 解压缩数据
-                            $uncompressedData = zlib_decode(base64_decode($compressedData));
-                
-                            // 检查解压缩是否成功
-                            if ($uncompressedData === false) {
-                                echo "Failed to decompress data.\n";
-                            } else {
-                                // 解码 JSON 数据
-                                $jsonData = json_decode($uncompressedData, true);
-                
-                                if ($jsonData === null) {
-                                    echo "Failed to decode JSON data.\n";
-                                } else {
-                                    echo "Decoded JSON data: " . json_encode($jsonData, JSON_PRETTY_PRINT) . "\n";
-                                }
-                            }
-                        }catch(\Throwable $e){
-                            echo $e->getMessage();
-                        }
-                        
-                    } else {
-                        echo "Text message received: {$msg}\n";
-                    }
+                    echo "Text message received: {$msg}\n";
                 });
-
+                $conn->send('{"op":6,"d":{"token":"MTA2NzA4MjU3NjU1ODMwNTI4MA.GfARvy.scMJWMo_jlYv5JBKgDlTWVvk8aVuLpOTAoJnkA","session_id":"c5345bfe9230d9df890b9190fb2a5561","seq":438}}');
                 $conn->on('close', function($code = null, $reason = null)  {
                     echo "Connection closed ({$code} - {$reason})\n";
                 });
